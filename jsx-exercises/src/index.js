@@ -58,17 +58,7 @@ function Greeting() {
 function TestComponent() {
     return(
     
-        <><p>Aaa</p>,,{"hi"},,<p>Bbb</p>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Michał</td>
-                    <td>Marzena</td>
-                    <td>Wiktor</td>
-                </tr>
-            </tbody>
-        </table>
-        </>
+
         
     );
 }
