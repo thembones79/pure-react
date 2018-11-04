@@ -15,16 +15,16 @@ function MyThing() {
                 The Author
                 </div>
 
-                <div>
-&nbsp;Non-breaking
-&nbsp;Spaces&nbsp;
+            <div>
+                &nbsp;Non-breaking
+                &nbsp;Spaces&nbsp;
 </div>
 
 
-<div>
-Line1
+            <div>
+                Line1
 {' '}
-Line2
+                Line2
 </div>
 
 
@@ -53,22 +53,30 @@ function Greeting() {
     return (
         <div>{username ? `Hello, ${username}` : `Not logged in`}</div>
     );
-    }
+}
 
 function TestComponent() {
-    return(
-    
+    return (
 
-        
+       
+            <table>
+                <tbody>
+                    <tr>
+                        <Data />
+                    </tr>
+                </tbody>
+            </table>
+       
+
     );
 }
 
 function Data() {
-    return(
+    return (
         <>
-        <td>Adam</td>
-        <td>Ula</td>
-        <td>Dorcia</td>
+            <td>Adam</td>
+            <td>Ula</td>
+            <td>Dorcia</td>
         </>
     );
 }
