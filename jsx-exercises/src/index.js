@@ -1,47 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function MyThing() {
-    return (
-        <div className='book' >
-            <div className='title' >
-                The
-
-
-
-                Title
-                </div>
-            <div className='author' >
-                The Author
-                </div>
-
-            <div>
-                &nbsp;Non-breaking
-                &nbsp;Spaces&nbsp;
-</div>
-
-
-            <div>
-                Line1
-{' '}
-                Line2
-</div>
-
-
-
-
-            <ul className='stats' >
-                <li className='rating' >
-                    5 stars
-                            </li>
-                <li className='isbn' >
-                    12-3456      78-910
-                </li>
-            </ul>
-        </div>
-    );
-
-}
 
 function Greeting() {
     // Try all of these variations:
@@ -56,9 +15,7 @@ function Greeting() {
 }
 
 function TestComponent() {
-    return (
-
-       
+    return (       
             <table>
                 <tbody>
                     <tr>
@@ -66,8 +23,6 @@ function TestComponent() {
                     </tr>
                 </tbody>
             </table>
-       
-
     );
 }
 
@@ -77,6 +32,7 @@ function Data() {
             <td>Adam</td>
             <td>Ula</td>
             <td>Dorcia</td>
+            <td><Greeting/></td>
         </>
     );
 }
