@@ -34,7 +34,7 @@
 }
 
 .time::before {
-  content : "\00b7";
+  content: "\00b7";
   padding-right: 0.3em;
 }
 
@@ -45,6 +45,19 @@
   color: #aab8c2;
 }
 
-.buttons i {
+.reply-button,
+.retweet-button,
+.like-button,
+.more-options-button {
   width: 80px;
+  display: inline-block;
+}
+
+.like-count,
+.retweet-count {
+  position: relative;
+  bottom: 2px;
+  font-size: 13px;
+  margin-left: 6px;
+  font-weight: bold;
 }
