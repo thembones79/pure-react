@@ -9,10 +9,18 @@ const AddressLabel = ({ person }) => (
     </div>
 );
 
+const Sender = ({sender}) => (
+    <div className="sender"><AddressLabel person={sender}/></div>
+);
+
+const Receiver = ({receiver}) => (
+    <div className="receiver"><AddressLabel person={receiver}/></div>
+);
+
 const Envelope = ({ from, to, stampUrl }) => (
     <div className="envelope">
-        <AddressLabel person={from} className="sender" />
-        <AddressLabel person={to} className="receiver" />
+        <Sender sender={from}/>
+        <Receiver receiver={to}/>
         <img className="stamp" src={stampUrl} alt="stamp" />
     </div>
 );
