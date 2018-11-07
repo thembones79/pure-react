@@ -1,26 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const AddressLabel = ({theMan}) => (
+const AddressLabel = ({ person }) => (
     <div className="address-label">
-        <p>{theMan.name}</p>
-        <p>{theMan.address}</p>
-        <p>{theMan.city}, {theMan.state} {theMan.zip}</p>
+        <p>{person.name}</p>
+        <p>{person.address}</p>
+        <p>{person.city}, {person.state} {person.zip}</p>
     </div>
 );
 
-var person = {
-    name: "Full Name",
+const Envelope = ({ from, to, stampUrl }) => (
+    <div className="envelope">
+        <AddressLabel person={from} className="sender" />
+        <AddressLabel person={to} className="receiver" />
+        <img className="stamp" src={stampUrl} alt="stamp" />
+    </div>
+);
+
+var sender = {
+    name: "Mr. Sender",
     address: "123 Fake St.",
     city: "Boston",
     state: "MA",
-    zip: "02118",
-    country: "USA"
+    zip: "02118"
 };
 
+var receiver = {
+    name: "Mrs. Receiver",
+    address: "123 Fake St.",
+    city: "San Francisco",
+    state: "CA",
+    zip: "94101"
+};
 
-const Envelope = () => (
-    
-);
+var url = "https://i2.wp.com/freepngimages.com/wp-content/uploads/2017/01/George-Washington-1908-Two-Cents-stamp.png";
 
-ReactDOM.render(<AddressLabel theMan={person}/>, document.querySelector('#root'));
+ReactDOM.render(<Envelope
+    from={sender}
+    to={receiver}
+    stampUrl={url}
+/>, document.querySelector('#root'));
