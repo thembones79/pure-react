@@ -1,16 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 //import moment from 'moment';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Time from "./time";
 import "./index.css";
 
 const FileList = ({ files }) => (
   <table className="file-list">
     <tbody>
       {files.map(file => (
-        <tr className="file-list-item" key={file.id}>
-          <td className="file-name">{file.name}</td>
-        </tr>
+        <FileListItem key={file.id} file={file} />
       ))}
     </tbody>
   </table>
@@ -18,6 +17,53 @@ const FileList = ({ files }) => (
 
 FileList.propTypes = {
   files: PropTypes.array
+};
+
+const FileListItem = ({ file }) => (
+  <tr className="file-list-item">
+    <td className="file-icon">
+      <FileIcon file={file} />
+    </td>
+    <td className="file-name">
+      <FileName file={file} />
+    </td>
+    <td className="commit-message">
+      <CommitMessage commit={file.latestCommit} />
+    </td>
+    <td className="age">
+      <Time time={file.updated_at} />
+    </td>
+  </tr>
+);
+
+FileListItem.propTypes = {
+  file: PropTypes.object.isRequired
+};
+
+const FileIcon = ({ file }) => {
+  let icon = "fa-file-alt";
+  if (file.type === "folder") {
+    icon = "fa-folder";
+  }
+  return <i className={`fa ${icon}`} />;
+};
+
+FileIcon.propTypes = {
+  file: PropTypes.object.isRequired
+};
+
+function FileName({ file }) {
+  return <>{file.name}</>;
+}
+
+FileName.propTypes = {
+  file: PropTypes.object.isRequires
+};
+
+const CommitMessage = ({ commit }) => <>{commit.message}</>;
+
+CommitMessage.propTypes = {
+  commit: PropTypes.object.isRequired
 };
 
 const testFiles = [
