@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import columns from "./mycolumns"
 
 const Trello = () => <Board board={columns} />;
 
@@ -14,8 +15,10 @@ const Board = ({ board }) => (
 
 const Column = ({ column }) => (
   <div className="column">
-    <ColumnTitle title={column.title} />
-    <MoreButton />
+    <div className="header">
+      <ColumnTitle title={column.title} />
+      <MoreButton />
+    </div>
     <CardList cardArr={column.cards} />
     <AddButton />
   </div>
@@ -36,46 +39,5 @@ const CardList = ({ cardArr }) => (
 );
 
 const AddButton = () => <div className="add-button">+ Add a card</div>;
-
-var column = {
-  title: "Phone Features",
-  cards: [
-    "Subwoofer",
-    "Non-porous, washable",
-    "Wings",
-    "Beveled Bezel",
-    "Bezeled Bevel",
-    "Seedless"
-  ]
-};
-
-var columns = [
-  {
-    title: "Phone Features",
-    cards: [
-      "Subwoofer",
-      "Non-porous, washable",
-      "Wings",
-      "Beveled Bezel",
-      "Bezeled Bevel",
-      "Seedless"
-    ]
-  },
-  {
-    title: "freeCodeCamp learning",
-    cards: ["HTML5", "CSS3", "Javascript", "ES6", "ReactJS", "Node.js"]
-  },
-  {
-    title: "I love my family",
-    cards: [
-      "My wife - Marzena",
-      "My son - Wiktor",
-      "My mother - Dorota",
-      "My brother - Adam",
-      "My sister - Ula",
-      "My auntie - Mila"
-    ]
-  }
-];
 
 ReactDOM.render(<Trello />, document.querySelector("#root"));
