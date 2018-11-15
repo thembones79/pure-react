@@ -16,7 +16,7 @@ const ListOfStories = () => (
       </tr>
       <tr>
         <td>
-          <Stories />
+          <Stories stories={hackerStories} />
         </td>
       </tr>
     </tbody>
@@ -46,42 +46,46 @@ const Header = ({ icon, title, navArr }) => {
   );
 };
 
-const Stories = () => (
+const Stories = ({ stories }) => (
   <table>
     <tbody>
-      <Story />
+      {stories.map((story, index) => (
+        <Story story={story} index={index} key={index} />
+      ))}
     </tbody>
   </table>
 );
 
-const Story = () => (
+const Story = ({ story, index }) => (
   <>
-    <MainText />
-    <SubText 
-    timestamp={hackerStories.time}
-    />
+    <MainText index={index} source={story.source} title={story.title}/>
+    <SubText timestamp={story.time}
+    points={story.points}
+    author={story.author}
+    comments={story.comments}
+     />
   </>
 );
 
-const MainText = () => (
+const MainText = ({ index, title, source }) => (
   <tr>
-    <td>1.</td>
+    <td>{index + 1}.</td>
     <td>▲</td>
     <td>
-      <span>Airtable raises $100M at a $1.1B valuation</span>
-      <span>(techcrunch.com)</span>
+      <span>{title}</span>
+      <span>({source})</span>
     </td>
   </tr>
 );
 
-const SubText = ({timestamp}) => (
+const SubText = ({ points, author, timestamp, comments }) => (
   <tr>
     <td colspan={2} />
     <td>
-      <span>125 points</span>
-      <span>by kbyatnal</span>
-      <span>{timestamp}</span>" | "<span>hide</span>" | "
-      <span>41 comments</span>
+      <span>{points} points</span>
+      <span>{author}</span>
+      <span>{timestamp}</span> | <span>hide</span> | 
+      {comments > 0 ?<span>{comments} comments</span> : <span>discuss</span>}
     </td>
   </tr>
 );
@@ -101,7 +105,7 @@ const hackerStories = [
     points: 175,
     author: "adamnemecek",
     time: "7 hours ago",
-    comments: 31
+    comments: 0
   }
 ];
 
