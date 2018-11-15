@@ -8,7 +8,7 @@ const ListOfStories = () => (
       <tr>
         <td>
           <Header
-            icon="A"
+            icon="Y"
             title="Hacker News"
             navArr={["new", "comments", "show", "ask", "jobs", "submit"]}
           />
