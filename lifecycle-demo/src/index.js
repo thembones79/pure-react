@@ -57,7 +57,7 @@ class LifecycleDemo extends React.Component {
     }
 
     componentWillUnmount(){
-        
+        console.log('{componentWillUnmout]', 'Goodbye cruel world.');
     }
 }
 
