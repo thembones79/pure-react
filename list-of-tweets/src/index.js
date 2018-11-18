@@ -137,6 +137,17 @@ var testTweetList = [
     likes: 0,
     retweets: 1,
     timestamp: "2018-07-30 21:24:37"
+  },
+  {
+    message: "Broda rządzi.",
+    avatarMail: "adam@outlook.com",
+    author: {
+      handle: "adam",
+      name: "brodacz"
+    },
+    likes: 10,
+    retweets: 100,
+    timestamp: "2018-11-17 21:24:37"
   }
 ];
 
