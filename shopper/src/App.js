@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "./Nav";
 import "./App.css";
 
-class App extends React.Components {
+class App extends React.Component {
   renderContent() {
     return <span>Empty</span>;
   }
