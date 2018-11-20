@@ -16,6 +16,8 @@ class App extends React.Component {
         return <span>Items</span>;
       case 1:
         return <span>Cart</span>;
+      case 2:
+        return <span>Test</span>
     }
   }
 
