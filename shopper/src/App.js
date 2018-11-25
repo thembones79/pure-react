@@ -42,13 +42,23 @@ class App extends React.Component {
         count: itemCounts[itemId]
       };
     });
-    return (
-      <CartPage
-        items={cartItems}
-        onAddOne={this.handleAddToCart}
-        onRemoveOne={this.handleRemoveOne}
-      />
-    );
+    let cartItemSumPrices = cartItems.map(item => item.price * item.count);
+    var cartTotalSum = cartItemSumPrices.reduce((total, num) => total + num, 0);
+
+    if (!cartTotalSum) {
+      return <div>Empty</div>;
+    } else {
+      return (
+        <div>
+          <CartPage
+            items={cartItems}
+            onAddOne={this.handleAddToCart}
+            onRemoveOne={this.handleRemoveOne}
+          />
+          <CartTotal total={cartTotalSum} />
+        </div>
+      );
+    }
   }
 
   renderContent() {
@@ -66,13 +76,16 @@ class App extends React.Component {
   render() {
     let { activeTab } = this.state;
     return (
-      <div className="App">
-        <Nav activeTab={activeTab} onTabChange={this.handleTabChange} />
-        <div>{this.state.cart.length} items</div>
+      <div className="App">       
+          <Nav activeTab={activeTab} onTabChange={this.handleTabChange} quantity={this.state.cart.length} total={this.props.cartTotalSum}/>
         <main className="App-content">{this.renderContent()}</main>
       </div>
     );
   }
 }
+
+const CartTotal = ({ total }) => {
+  return <div className="App-cart-total">Total: ${total}</div>;
+};
 
 export default App;

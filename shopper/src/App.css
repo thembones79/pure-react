@@ -37,3 +37,14 @@
 .App-nav-item.selected {
   border-bottom-color: #FFAA3F;
 }
+
+.App-cart-total {
+  font-size: 24px;
+  float: right;
+  padding: 10px;
+}
+
+.App-nav-summary {
+  margin-top: 10px;
+  float: right;
+}

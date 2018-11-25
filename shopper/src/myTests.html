@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <p>Click the button to get the sum of the numbers in the array.</p>
+    <button onclick="myFunction()">Try it</button>
+
+    <p>Sum of numbers in array: <span id="demo"></span></p>
+
+    <script>
+        var numbers = [65, 44, 12, 4];
+        var objectArr = [{
+            a: 1
+        }, {
+            a: 2
+        }, {
+            a: 3
+        }, {
+            a: 4
+        }];
+        var priceObj = [{
+            id: 0,
+            price: 100
+        }, {
+            id: 1,
+            price: 200
+        }, {
+            id: 2,
+            price: 300
+        }, {
+            id: 3,
+            price: 400
+        }];
+        var myCart = [0, 0, 2, 2, 2, 3]
+        var arrFromObj = objectArr.map((x) => x.a);
+        var priceArr = myCart.map(itemId => {
+            var item = priceObj.find(item => item.id === parseInt(itemId, 10));
+            return (
+                priceObj.price;
+            );
+        });
+
+
+        function myFunction(item) {
+            document.getElementById("demo").innerHTML = arrFromObj.reduce((total, num) => total + num);
+        }
+    </script>
+
+</body>
+
+</html>

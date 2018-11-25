@@ -27,6 +27,7 @@ function CartPage({ items, onAddOne, onRemoveOne }) {
           </Item>
         </li>
       ))}
+    
     </ul>
   );
 }

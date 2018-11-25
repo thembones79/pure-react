@@ -1,6 +1,6 @@
 import React from "react";
 
-const Nav = ({ activeTab, onTabChange }) => (
+const Nav = ({ activeTab, onTabChange, quantity, total }) => (
   <nav className="App-nav">
     <ul>
       <li className={`App-nav-item ${activeTab === 0 && "selected"}`}>
@@ -12,7 +12,8 @@ const Nav = ({ activeTab, onTabChange }) => (
       <li className={`App-nav-item ${activeTab ===2 && "selected"}`}>
           <NavTest index={2} onClick={onTabChange}>Test</NavTest>
       </li>
-    </ul>
+      <span className="App-nav-summary">{quantity} items (${total})</span>
+    </ul>   
   </nav>
 );
 
