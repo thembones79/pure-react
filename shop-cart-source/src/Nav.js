@@ -4,7 +4,7 @@ const Nav = ({ activeTab, onTabChange, quantity, total }) => (
   <nav className="App-nav">
     <ul>
       <li className={`App-nav-item ${activeTab === 0 && "selected"}`}>
-        <a  href="#" alt="Items"  onClick={() => onTabChange(0)}>Items</a>
+        <a onClick={() => onTabChange(0)}>Items</a>
       </li>
       <li className={`App-nav-item ${activeTab === 1 && "selected"}`}>
         <NavLink index={1} onClick={onTabChange}>Cart</NavLink>
@@ -25,7 +25,7 @@ class NavLink extends React.Component {
 
     render() {
         return (
-            <a href="#" alt={this.props.children} onClick={this.handleClick}>{this.props.children}</a>
+            <a onClick={this.handleClick}>{this.props.children}</a>
         );
     }
 }
@@ -37,7 +37,7 @@ const NavTest = ({index, onClick, children}) => {
     }
 
     return (
-        <a  href="#" alt={this.props.children} onClick={handleClick}>{children}</a>
+        <a onClick={handleClick}>{children}</a>
     );
 }
 
