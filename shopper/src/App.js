@@ -3,7 +3,6 @@ import CartPage from "./CartPage";
 import Nav from "./Nav";
 import "./App.css";
 import ItemPage from "./ItemPage";
-import SourceJSON from "./SourceJSON";
 import { items } from "./static-data";
 
 class App extends React.Component {
@@ -75,7 +74,7 @@ class App extends React.Component {
       case 1:
         return this.renderCart();
       case 2:
-        return <SourceJSON />;
+        return <span>Test</span>;
     }
   }
   navBarCartTotal() {

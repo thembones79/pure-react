@@ -7,38 +7,38 @@ const Nav = ({ activeTab, onTabChange, quantity, total }) => (
         <a onClick={() => onTabChange(0)}>Items</a>
       </li>
       <li className={`App-nav-item ${activeTab === 1 && "selected"}`}>
-        <NavLink index={1} onClick={onTabChange}>Cart</NavLink>
+        <NavLink index={1} onClick={onTabChange}>
+          Cart
+        </NavLink>
       </li>
-      <li className={`App-nav-item ${activeTab ===2 && "selected"}`}>
-          <NavTest index={2} onClick={onTabChange}>Test</NavTest>
+      <li className={`App-nav-item ${activeTab === 2 && "selected"}`}>
+        <NavTest index={2} onClick={onTabChange}>
+          Test
+        </NavTest>
       </li>
-      <span className="App-nav-summary"><i class="fas fa-shopping-cart"> </i> {quantity} items (${total})</span>
-    </ul>   
+      <span className="App-nav-summary">
+        <i class="fas fa-shopping-cart"> </i> {quantity} items (${total})
+      </span>
+    </ul>
   </nav>
 );
 
-
 class NavLink extends React.Component {
-    handleClick = () => {
-        this.props.onClick(this.props.index);
-    }
+  handleClick = () => {
+    this.props.onClick(this.props.index);
+  };
 
-    render() {
-        return (
-            <a onClick={this.handleClick}>{this.props.children}</a>
-        );
-    }
+  render() {
+    return <a onClick={this.handleClick}>{this.props.children}</a>;
+  }
 }
 
-const NavTest = ({index, onClick, children}) => {
+const NavTest = ({ index, onClick, children }) => {
+  const handleClick = () => {
+    onClick(index);
+  };
 
-    const handleClick = () => {
-        onClick(index);
-    }
-
-    return (
-        <a onClick={handleClick}>{children}</a>
-    );
-}
+  return <a onClick={handleClick}>{children}</a>;
+};
 
 export default Nav;
