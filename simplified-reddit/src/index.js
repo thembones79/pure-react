@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import axios from 'axios';
 
 class Reddit extends React.Component {
     state = {
@@ -10,6 +11,11 @@ class Reddit extends React.Component {
         return (
             <div>
                 <h1>/r/reactjs</h1>
+                <ul>
+                {this.state.posts.map(post => (
+                    <li key={post.id}>{post.title}</li>
+                ))}
+                </ul>
             </div>
         );
     }
