@@ -46,7 +46,12 @@ class App extends React.Component {
     var cartTotalSum = cartItemSumPrices.reduce((total, num) => total + num, 0);
 
     if (!cartTotalSum) {
-      return <div>Empty</div>;
+      return (
+        <div className="App-emptyCart">
+          <p>Your cart is empty.</p>
+          <p>Why not add some expensive products to it?</p>
+        </div>
+      );
     } else {
       return (
         <div>
@@ -72,12 +77,26 @@ class App extends React.Component {
         return <span>Test</span>;
     }
   }
+  navBarCartTotal() {
+    var priceArr = this.state.cart.map(itemId => {
+      var item = items.find(item => item.id === parseInt(itemId, 10));
+      return item.price;
+    });
+    var cartTotal = priceArr.reduce((total, num) => total + num, 0);
+    return cartTotal;
+  }
 
   render() {
     let { activeTab } = this.state;
+
     return (
-      <div className="App">       
-          <Nav activeTab={activeTab} onTabChange={this.handleTabChange} quantity={this.state.cart.length} total={this.props.cartTotalSum}/>
+      <div className="App">
+        <Nav
+          activeTab={activeTab}
+          onTabChange={this.handleTabChange}
+          quantity={this.state.cart.length}
+          total={this.navBarCartTotal()}
+        />
         <main className="App-content">{this.renderContent()}</main>
       </div>
     );

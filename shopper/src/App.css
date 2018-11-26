@@ -47,4 +47,13 @@
 .App-nav-summary {
   margin-top: 10px;
   float: right;
+  color: #444;
+}
+
+.App-emptyCart{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
 }

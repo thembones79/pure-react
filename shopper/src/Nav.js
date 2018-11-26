@@ -12,7 +12,7 @@ const Nav = ({ activeTab, onTabChange, quantity, total }) => (
       <li className={`App-nav-item ${activeTab ===2 && "selected"}`}>
           <NavTest index={2} onClick={onTabChange}>Test</NavTest>
       </li>
-      <span className="App-nav-summary">{quantity} items (${total})</span>
+      <span className="App-nav-summary"><i class="fas fa-shopping-cart"> </i> {quantity} items (${total})</span>
     </ul>   
   </nav>
 );
