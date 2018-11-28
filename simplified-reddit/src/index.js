@@ -21,26 +21,7 @@ class Reddit extends React.Component {
         <h1>/r/reactjs</h1>
         <ul>
           {this.state.posts.map(post => (
-            <li key={post.id}>
-              <hr />
-              <a className="title" href={post.url}>
-                {post.title}
-              </a>
-              <div className="domain">{post.domain}</div>
-              <div className="author">{post.author}</div>
-              <img
-                className="thumbnail"
-                alt="thumbnail"
-                src={
-                  post.thumbnail === "self"
-                    ? "https://www.redditstatic.com/new-icon.png"
-                    : post.thumbnail
-                }
-              />{" "}
-              <div>score: {post.score}</div>
-              <span>comments: {post.num_comments} </span>{" "}
-              <Time time={post.created_utc} />
-            </li>
+            <Post post={post} />
           ))}
         </ul>
       </div>
@@ -48,9 +29,61 @@ class Reddit extends React.Component {
   }
 }
 
+const Scoring = ({ score }) => (
+  <div className="scoring">
+    <button className="vote">🡅</button>
+    <div className="score">{score}</div>
+    <button className="vote">🡇</button>
+  </div>
+);
+
+const Avatar = ({ picture }) => (
+  <img
+    className="thumbnail"
+    alt="thumbnail"
+    src={
+      picture === "self" ? "https://www.redditstatic.com/new-icon.png" : picture
+    }
+  />
+);
+
+const FullTitle = ({ url, title, domain }) => (
+  <div className="fulltitle">
+    <a className="title" href={url}>
+      {title}
+    </a>
+    <span className="domain">{domain}</span>
+  </div>
+);
+
 const Time = ({ time }) => {
-  const timeString = moment(time).fromNow();
+  const timeString = moment.unix(time).fromNow();
   return <span className="time">{timeString}</span>;
 };
+
+const Author = ({ author }) => <span className="author">{author}</span>;
+
+const CommentSection = ({ comments }) => (
+  <div className="comment-section">
+    <span className="comments">{comments} comments</span>
+    <span className="fakelinks"> share save hide report pocket</span>
+  </div>
+);
+
+const Post = ({ post }) => (
+  <li key={post.id}>
+    <div className="post">
+      <Scoring score={post.score} />
+      <Avatar picture={post.thumbnail} />
+      <div className="right-content">
+        <hr />
+        <FullTitle url={post.url} title={post.title} domain={post.domain} />
+        Submitted <Time time={post.created_utc} /> by{" "}
+        <Author author={post.author} />
+        <CommentSection comments={post.num_comments} />
+      </div>
+    </div>
+  </li>
+);
 
 ReactDOM.render(<Reddit />, document.querySelector("#root"));

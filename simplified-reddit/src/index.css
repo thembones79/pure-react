@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+li {
+  list-style: none;
+}
+
 .thumbnail{
   width: 64px;
   height: auto;
@@ -21,4 +25,21 @@ code {
 .reddit{
   max-width: 800px;
   margin: 0 auto;
+}
+
+
+
+.scoring{
+  display: inline-block;
+}
+
+.thumbnail{
+  display: inline-block;
+}
+
+.right-content{
+  display: inline-block;
+  max-width: 660px;
+  width: 600px;
+  min-width: 500px;
 }
