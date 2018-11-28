@@ -12,3 +12,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.thumbnail{
+  width: 64px;
+  height: auto;
+}
+
+.reddit{
+  max-width: 800px;
+  margin: 0 auto;
+}
