@@ -21,7 +21,7 @@ class Reddit extends React.Component {
         <h1>/r/reactjs</h1>
         <ul>
           {this.state.posts.map(post => (
-            <Post post={post} />
+            <Post post={post} key={post.id}/>
           ))}
         </ul>
       </div>
