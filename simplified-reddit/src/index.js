@@ -109,11 +109,11 @@ const Scoring = ({
   scoreColor
 }) => (
   <div className="scoring">
-    <button onClick={onUpVote} className={`vote ${upArrowColor}`}>
+    <button onClick={onUpVote} className={`up vote ${upArrowColor}`}>
       🡅
     </button>
     <div className={`score ${scoreColor}`}>{score}</div>
-    <button onClick={onDownVote} className={`vote ${downArrowColor}`}>
+    <button onClick={onDownVote} className={`down vote ${downArrowColor}`}>
       🡇
     </button>
   </div>

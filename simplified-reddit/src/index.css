@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #e2e2e2;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -18,21 +19,22 @@ li {
 }
 
 .thumbnail {
+  display: inline-block;
+  margin: 10px;
   width: 64px;
   height: auto;
+  vertical-align: bottom;
 }
 
 .reddit {
   max-width: 800px;
   margin: 0 auto;
+  background-color: white;
 }
 
 .scoring {
   display: inline-block;
-}
-
-.thumbnail {
-  display: inline-block;
+  margin: 10px;
 }
 
 .right-content {
@@ -40,6 +42,7 @@ li {
   max-width: 660px;
   width: 600px;
   min-width: 500px;
+  margin: 10px;
 }
 
 .red {
@@ -54,6 +57,36 @@ li {
   color: rgb(113, 147, 255);
 }
 
-.gray{
-  color:gray;
+.gray {
+  color: gray;
+}
+
+.up:hover {
+  color: red;
+}
+
+.down:hover {
+  color: blue;
+}
+
+.score {
+  text-align: center;
+}
+
+.vote {
+  background-color: white;
+  border: 0;
+}
+
+hr{
+  border: 0;
+  border-top: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+h1{
+  text-align: center;
+  font-weight: 100;
+  margin:0;
+  padding-top: 30px;
 }
