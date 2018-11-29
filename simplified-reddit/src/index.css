@@ -17,29 +17,43 @@ li {
   list-style: none;
 }
 
-.thumbnail{
+.thumbnail {
   width: 64px;
   height: auto;
 }
 
-.reddit{
+.reddit {
   max-width: 800px;
   margin: 0 auto;
 }
 
-
-
-.scoring{
+.scoring {
   display: inline-block;
 }
 
-.thumbnail{
+.thumbnail {
   display: inline-block;
 }
 
-.right-content{
+.right-content {
   display: inline-block;
   max-width: 660px;
   width: 600px;
   min-width: 500px;
+}
+
+.red {
+  color: rgb(255, 69, 0);
+}
+
+.black {
+  color: black;
+}
+
+.blue {
+  color: rgb(113, 147, 255);
+}
+
+.gray{
+  color:gray;
 }

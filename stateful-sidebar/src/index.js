@@ -4,7 +4,7 @@ import "./index.css";
 
 class Layout extends React.Component {
   state = {
-    chowSidebar: false
+    showSidebar: false
   };
 
   toggleSidebar = () => {
