@@ -3,133 +3,109 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { fakeData } from "./fake-data";
 
-const myName = fakeData.channels[0].messages[0].user;
+class Slack extends React.Component {
+  state = {
+    activeChannel: "#general",
+    channels: fakeData.channels,
+    people: fakeData.people
+  };
 
-const Slack = ({ name }) => (
-  <div>
-    <div className="app">
-      <div className="sidebar">
-        <div className="channels">
-          <h3>Channels</h3>
-          <ul>
-            <li>#general</li>
-            <li>#help</li>
-            <li>#react</li>
-            <li>#redux</li>
-            <li>#react-router</li>
-          </ul>
-        </div>
-        <div className="people">
-          <h3>People</h3>
-          <ul>
-            <li>Dave</li>
-            <li>Zack</li>
-            <li>Michael</li>
-            <li>Victor</li>
-            <li>Mary</li>
-          </ul>
-        </div>
+  handleChannelChange = channelName => {
+    this.setState({ activeChannel: channelName });
+  };
+
+  render() {
+    return (
+      <div className="app">
+        <Sidebar channelChangeHandler={this.handleChannelChange} />
+        <Main activeChannel={this.state.activeChannel} />
       </div>
-      <div className="main">
-        <div className="posts">
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/1dave@dave.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Dave 2018-03-09</p>
-              <p>Is it working?</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/2myself@myself.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Myself 2018-03-10</p>
-              <p>Of course</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/3dave@dave.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Dave 2018-03-09</p>
-              <p>Is it working?</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/4myself@myself.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Myself 2018-03-10</p>
-              <p>Of course</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/5dave@dave.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Dave 2018-03-09</p>
-              <p>Is it working?</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/6myself@myself.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Myself 2018-03-10</p>
-              <p>Of course</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/7dave@dave.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Dave 2018-03-09</p>
-              <p>Is it working?</p>
-            </div>
-          </div>
-          <div className="post">
-            <img
-              src="https://api.adorable.io/avatars/80/8myself@myself.pl"
-              className="avatar"
-              alt="avatar"
-            />
-            <div className="post-content">
-              <p>Myself 2018-03-10</p>
-              <p>Of course</p>
-            </div>
-          </div>
-        </div>
-        <div className="footer">
-          <input
-            className="message"
-            placeholder={`Yo, ${name} :) Type your message here. Press ENTER to send.`}
-          />
-        </div>
-      </div>
+    );
+  }
+}
+
+const Channels = ({ onChannelChange }) => (
+  <div className="channels">
+    <h3>Channels</h3>
+    <ul>
+      {fakeData.channels.map(x => (
+        <li key={x.channel} onClick={() => onChannelChange(x.channel)}>
+          {x.channel}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const People = () => (
+  <div className="people">
+    <h3>People</h3>
+    <ul>
+      {fakeData.people.map(x => (
+        <li key={x.channel} onClick={() => alert(x.channel)}>
+          {x.channel}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const Sidebar = ({ channelChangeHandler }) => (
+  <div className="sidebar">
+    <Channels onChannelChange={channelChangeHandler} />
+    <People />
+  </div>
+);
+
+const Post = ({ user, timestamp, message }) => (
+  <div className="post">
+    <img
+      src={`https://api.adorable.io/avatars/160/${user}@${user}.pl`}
+      className="avatar"
+      alt="avatar"
+    />
+    <div className="post-content">
+      <p>
+        <span className="user">{user}</span>{" "}
+        <span className="timestamp">{timestamp}</span>
+      </p>
+      <p className="old-message">{message}</p>
     </div>
   </div>
 );
 
-ReactDOM.render(<Slack name={myName} />, document.getElementById("root"));
+const Posts = props => {
+  var activeConversation = fakeData.channels.find(
+    active => active.channel === props.activeChannel
+  );
+  return (
+    <div className="posts">
+      {activeConversation.messages.map((post, index) => (
+        <Post
+          key={index}
+          user={post.user}
+          timestamp={post.timestamp}
+          message={post.message}
+        />
+      ))}
+    </div>
+  );
+};
+
+const Footer = () => (
+  <div className="footer">
+    <input
+      className="message"
+      placeholder={`Type your message here. Press ENTER to send.`}
+    />
+  </div>
+);
+
+const Main = props => (
+  <div className="main">
+    <Posts activeChannel={props.activeChannel} />
+    <Footer />
+  </div>
+);
+
+ReactDOM.render(<Slack />, document.getElementById("root"));

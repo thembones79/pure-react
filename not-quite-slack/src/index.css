@@ -23,6 +23,7 @@ code {
   background-color: lightblue;
   margin: 0;
   padding: 30px;
+  padding-right: 0px;
   width: 20%;
 }
 
@@ -41,6 +42,8 @@ code {
 .avatar {
   margin: 25px;
   border-radius: 5px;
+  width: 80px;
+  height: 80px;
 }
 
 .main {
@@ -49,7 +52,7 @@ code {
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .footer {
@@ -65,4 +68,9 @@ code {
   border: 1px solid #eee;
   padding: 10px;
   margin: 25px;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
 }
