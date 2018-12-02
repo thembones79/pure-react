@@ -74,3 +74,10 @@ li {
   list-style: none;
   cursor: pointer;
 }
+
+.nothing-selected{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+}

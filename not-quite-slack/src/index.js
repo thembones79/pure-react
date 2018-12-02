@@ -5,31 +5,69 @@ import { fakeData } from "./fake-data";
 
 class Slack extends React.Component {
   state = {
-    activeChannel: "#general",
-    channels: fakeData.channels,
-    people: fakeData.people
+    activeChannel: "none",
+    activeGroup: "channels",
+    fakeData: fakeData,
+    inputText: ""
   };
 
-  handleChannelChange = channelName => {
-    this.setState({ activeChannel: channelName });
+  handleChannelChange = (channelName, groupName) => {
+    this.setState({ activeChannel: channelName, activeGroup: groupName });
+  };
+
+  handleEnter = event => {
+    if (this.state.inputText !== "") {
+      let newFakeData = { ...this.state.fakeData };
+      let indexOfActiveChannel = newFakeData[this.state.activeGroup].findIndex(
+        i => i.channel === this.state.activeChannel
+      );
+      if (event.key === "Enter") {
+        let d = new Date();
+        newFakeData[this.state.activeGroup][indexOfActiveChannel].messages.push(
+          {
+            user: "Myself",
+            timestamp: `${d.toUTCString()}`,
+            message: event.target.value
+          }
+        );
+        this.setState({ fakeData: newFakeData, inputText: "" });
+      }
+    }
+  };
+
+  handleInputChange = event => {
+    this.setState({ inputText: event.target.value });
   };
 
   render() {
     return (
       <div className="app">
-        <Sidebar channelChangeHandler={this.handleChannelChange} />
-        <Main activeChannel={this.state.activeChannel} />
+        <Sidebar
+          channelChangeHandler={this.handleChannelChange}
+          data={this.state.fakeData}
+        />
+        <Main
+          activeChannel={this.state.activeChannel}
+          activeGroup={this.state.activeGroup}
+          data={this.state.fakeData}
+          inputText={this.state.inputText}
+          handleEnter={this.handleEnter}
+          handleChange={this.handleInputChange}
+        />
       </div>
     );
   }
 }
 
-const Channels = ({ onChannelChange }) => (
+const Channels = ({ onChannelChange, data }) => (
   <div className="channels">
     <h3>Channels</h3>
     <ul>
-      {fakeData.channels.map(x => (
-        <li key={x.channel} onClick={() => onChannelChange(x.channel)}>
+      {data.channels.map(x => (
+        <li
+          key={x.channel}
+          onClick={() => onChannelChange(x.channel, "channels")}
+        >
           {x.channel}
         </li>
       ))}
@@ -37,12 +75,15 @@ const Channels = ({ onChannelChange }) => (
   </div>
 );
 
-const People = () => (
+const People = ({ onChannelChange, data }) => (
   <div className="people">
     <h3>People</h3>
     <ul>
-      {fakeData.people.map(x => (
-        <li key={x.channel} onClick={() => alert(x.channel)}>
+      {data.people.map(x => (
+        <li
+          key={x.channel}
+          onClick={() => onChannelChange(x.channel, "people")}
+        >
           {x.channel}
         </li>
       ))}
@@ -50,10 +91,10 @@ const People = () => (
   </div>
 );
 
-const Sidebar = ({ channelChangeHandler }) => (
+const Sidebar = ({ channelChangeHandler, data }) => (
   <div className="sidebar">
-    <Channels onChannelChange={channelChangeHandler} />
-    <People />
+    <Channels onChannelChange={channelChangeHandler} data={data} />
+    <People onChannelChange={channelChangeHandler} data={data} />
   </div>
 );
 
@@ -75,36 +116,61 @@ const Post = ({ user, timestamp, message }) => (
 );
 
 const Posts = props => {
-  var activeConversation = fakeData.channels.find(
-    active => active.channel === props.activeChannel
-  );
+  if (props.activeChannel === "none") {
+    return (
+      <div className="nothing-selected">
+        <p>Please select a channel or person to chat with.</p>
+      </div>
+    );
+  } else {
+    var activeConversation;
+    activeConversation = props.data[props.activeGroup].find(
+      active => active.channel === props.activeChannel
+    );
+
+    return (
+      <div className="posts">
+        {activeConversation.messages.map((post, index) => (
+          <Post
+            key={index}
+            user={post.user}
+            timestamp={post.timestamp}
+            message={post.message}
+          />
+        ))}
+      </div>
+    );
+  }
+};
+
+const Footer = ({ inputText, handleEnter, handleChange, activeChannel }) => {
   return (
-    <div className="posts">
-      {activeConversation.messages.map((post, index) => (
-        <Post
-          key={index}
-          user={post.user}
-          timestamp={post.timestamp}
-          message={post.message}
-        />
-      ))}
+    <div className="footer">
+      <input
+        className="message"
+        placeholder={`Type your message here. Press ENTER to send.`}
+        value={inputText}
+        onKeyPress={handleEnter}
+        onChange={handleChange}
+        disabled={activeChannel === "none"}
+      />
     </div>
   );
 };
 
-const Footer = () => (
-  <div className="footer">
-    <input
-      className="message"
-      placeholder={`Type your message here. Press ENTER to send.`}
-    />
-  </div>
-);
-
 const Main = props => (
   <div className="main">
-    <Posts activeChannel={props.activeChannel} />
-    <Footer />
+    <Posts
+      activeChannel={props.activeChannel}
+      activeGroup={props.activeGroup}
+      data={props.data}
+    />
+    <Footer
+      handleEnter={props.handleEnter}
+      handleChange={props.handleChange}
+      inputText={props.inputText}
+      activeChannel={props.activeChannel}
+    />
   </div>
 );
 
