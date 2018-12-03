@@ -1,0 +1,13 @@
+.posts {
+    overflow: auto;
+}
+
+.nothing-selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(57, 76, 110);
+    height: 80%;
+    font-size: 2em;
+    font-weight: 100;
+}

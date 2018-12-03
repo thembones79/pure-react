@@ -1,0 +1,15 @@
+.footer {
+    border-top: 2px solid #eee;
+    height: 100px;
+    margin: 0;
+}
+
+.message {
+    width: calc(100% - 80px);
+    height: 2em;
+    border-radius: 8px;
+    border: 2px solid #eee;
+    padding: 10px;
+    margin: 25px;
+    overflow: hidden;
+}

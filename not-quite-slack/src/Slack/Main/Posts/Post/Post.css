@@ -1,0 +1,23 @@
+.post {
+  display: flex;
+}
+
+.post-content {
+  margin-top: 8px;
+}
+
+.avatar {
+  margin: 25px;
+  border-radius: 5px;
+  width: 80px;
+  height: 80px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.timestamp {
+  color: #aaa;
+  margin-left: 10px;
+}

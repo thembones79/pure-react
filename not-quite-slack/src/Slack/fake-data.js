@@ -1,7 +1,7 @@
 let fakeData = {
   channels: [
     {
-      channel: "#general",
+      channel: "# general",
       messages: [
         {
           user: "Dave",
@@ -16,7 +16,7 @@ let fakeData = {
       ]
     },
     {
-      channel: "#help",
+      channel: "# help",
       messages: [
         {
           user: "Mike",

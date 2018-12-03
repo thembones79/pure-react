@@ -1,0 +1,39 @@
+.sidebar {
+    background-color: rgb(57, 76, 110);
+    color: white;
+    margin: 0;
+    padding: 30px;
+    padding-top: 2px;
+    padding-right: 0px;
+    width: 20%;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
+ul {
+    padding-left: 0px;
+}
+
+.navitem {
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    border-radius: 6px 0px 0px 6px;
+}
+
+.navitem:hover {
+    font-weight: bold;
+}
+
+h3 {
+    text-transform: uppercase;
+}
+
+.active {
+    background-color: orange;
+    color: rgb(57, 76, 110);
+    font-weight: 400;
+}
