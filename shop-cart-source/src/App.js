@@ -7,7 +7,11 @@ import SourceJSON from "./SourceJSON";
 import { items } from "./static-data";
 
 class App extends React.Component {
-  state = { activeTab: 0, cart: [] };
+  state = { activeTab: 0, cart: [], dataFeed: items };
+
+  handleDataChange = event => {
+    this.setState({ dataFeed: event.target.value });
+  };
 
   handleTabChange = index => {
     this.setState({ activeTab: index });
@@ -37,7 +41,9 @@ class App extends React.Component {
     }, {});
 
     let cartItems = Object.keys(itemCounts).map(itemId => {
-      var item = items.find(item => item.id === parseInt(itemId, 10));
+      var item = this.state.dataFeed.find(
+        item => item.id === parseInt(itemId, 10)
+      );
       return {
         ...item,
         count: itemCounts[itemId]
@@ -68,19 +74,29 @@ class App extends React.Component {
   }
 
   renderContent() {
+    var statefulItems = this.state.dataFeed;
     switch (this.state.activeTab) {
       default:
       case 0:
-        return <ItemPage items={items} onAddToCart={this.handleAddToCart} />;
+        return (
+          <ItemPage items={statefulItems} onAddToCart={this.handleAddToCart} />
+        );
       case 1:
         return this.renderCart();
-      case 2:
-        return <SourceJSON />;
+   /*   case 2:
+        return (
+          <SourceJSON
+            dataFeed={JSON.stringify(this.state.dataFeed)}
+            handleDataChange={this.handleDataChange}
+          />
+        );*/
     }
   }
   navBarCartTotal() {
     var priceArr = this.state.cart.map(itemId => {
-      var item = items.find(item => item.id === parseInt(itemId, 10));
+      var item = this.state.dataFeed.find(
+        item => item.id === parseInt(itemId, 10)
+      );
       return item.price;
     });
     var cartTotal = priceArr.reduce((total, num) => total + num, 0);

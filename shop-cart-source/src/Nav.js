@@ -11,11 +11,12 @@ const Nav = ({ activeTab, onTabChange, quantity, total }) => (
           Cart
         </NavLink>
       </li>
+      {/*
       <li className={`App-nav-item ${activeTab === 2 && "selected"}`}>
         <NavTest index={2} onClick={onTabChange}>
           Test
         </NavTest>
-      </li>
+      </li> */}
       <span className="App-nav-summary">
         <i class="fas fa-shopping-cart"> </i> {quantity} items (${total})
       </span>
@@ -32,13 +33,13 @@ class NavLink extends React.Component {
     return <a onClick={this.handleClick}>{this.props.children}</a>;
   }
 }
-
+/*
 const NavTest = ({ index, onClick, children }) => {
   const handleClick = () => {
     onClick(index);
   };
 
   return <a onClick={handleClick}>{children}</a>;
-};
+};*/
 
 export default Nav;
