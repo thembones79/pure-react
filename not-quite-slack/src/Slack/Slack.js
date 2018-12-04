@@ -7,7 +7,7 @@ import Sidebar from './Sidebar/Sidebar';
 class Slack extends React.Component {
     state = {
       activeChannel: "none",
-      activeGroup: "channels",
+      activeGroup: "channels",  //there are two groups: "channels" and "people"
       fakeData: fakeData,
       inputText: ""
     };
@@ -16,6 +16,7 @@ class Slack extends React.Component {
       this.setState({ activeChannel: channelName, activeGroup: groupName });
     };
   
+    // this is a function that executes via "onKeyPress" event - it puts a text from input to the correct conversation and clears the input
     handleEnter = event => {
       if (this.state.inputText !== "") {
         let newFakeData = { ...this.state.fakeData };
@@ -35,7 +36,7 @@ class Slack extends React.Component {
         }
       }
     };
-  
+   // classic React's controlled input via "onChange" event
     handleInputChange = event => {
       this.setState({ inputText: event.target.value });
     };
