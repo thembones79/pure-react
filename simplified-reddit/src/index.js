@@ -124,7 +124,7 @@ const Avatar = ({ picture }) => (
     className="thumbnail"
     alt="thumbnail"
     src={
-      picture === "self" ? "https://www.redditstatic.com/new-icon.png" : picture
+      picture === "self"|| picture ==="default" ? "https://www.redditstatic.com/new-icon.png" : picture
     }
   />
 );
