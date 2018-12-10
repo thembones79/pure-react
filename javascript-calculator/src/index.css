@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  font-weight:100;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -11,4 +12,114 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#display {
+  grid-area: display;
+  align-self: center;
+  justify-self:end;
+  background-color: #222222;
+  color:white;
+  padding: 2%;
+}
+
+#zero {  
+  grid-area: zero; 
+}
+
+#one {  
+  grid-area: one; 
+}
+
+#two {  
+  grid-area: two; 
+}
+
+#three {  
+  grid-area: three; 
+}
+
+#four {  
+  grid-area: four; 
+}
+
+#five {  
+  grid-area: five; 
+}
+
+#six {  
+  grid-area: six; 
+}
+
+#seven {  
+  grid-area: seven; 
+}
+
+#eight {  
+  grid-area: eight; 
+}
+
+#nine {  
+  grid-area: nine; 
+}
+
+#add {  
+  grid-area: add; 
+  background-color: #eeeeee;
+}
+
+#subtract {  
+  grid-area: subtract; 
+  background-color: #eeeeee;
+}
+
+#multiply {  
+  grid-area: multiply; 
+  background-color: #eeeeee;
+}
+
+#divide {  
+  grid-area: divide; 
+  background-color: #eeeeee;
+}
+
+#decimal {  
+  grid-area: decimal; 
+}
+
+#clear {  
+  grid-area: clear;
+  background-color: #eeeeee; 
+}
+
+#equals {  
+  grid-area: equals; 
+  background-color: #ff7126;
+}
+
+#calculator {  
+  width: 100vw;
+  height: 100vh; 
+  display: grid;
+  background-color: #222222;
+  font-size: 12vmin;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    "display display display display"
+    "add subtract multiply divide"
+    "seven eight nine equals"
+    "four five six equals"
+    "one two three equals"
+    "zero decimal clear equals";
+}
+
+button{
+  font-size: 9vmin;
+  background-color: white;
+  color: #222222;
+  outline: none;
+  border: 1px solid #dadada;
+  font-weight: 100;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
