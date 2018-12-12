@@ -9,10 +9,12 @@ class Calculator extends React.Component {
     result: "",
     leftValue: "",
     rightValue: "",
-    operator: "none"
+    operatorPressed: false,
+    operator: "none",
+    initial: true
   };
   handleValueClick = event => {
-    this.setState({
+    this.setState({operatorPressed: false, operator: "none",
       currentNumber:
         this.state.currentNumber === "0"
           ? event.target.value
@@ -21,7 +23,7 @@ class Calculator extends React.Component {
   };
 
   handleDecimalClick = event => {
-    this.setState({
+    this.setState({operatorPressed: false, operator: "none",
       currentNumber: this.state.currentNumber.includes(".")
         ? this.state.currentNumber
         : this.state.currentNumber + event.target.value
@@ -29,17 +31,22 @@ class Calculator extends React.Component {
   };
 
   handleAddClick = event => {
-    this.setState({
-      currentNumber: this.state.currentNumber[this.state.currentNumber.length-1]==="+"
-        ? this.state.currentNumber
-        : this.state.currentNumber + event.target.value
+    this.setState({      
+      leftValue: this.state.operator!=="none"
+        ? this.state.currentNumber.substring(0, this.state.currentNumber.length-1) + event.target.value
+        : this.state.currentNumber + event.target.value,
+        currentNumber: "0",
+        formula: this.state.formula + this.state.leftValue,
+        operatorPressed: true,
+        operator: "add",       
+        initial:false
     });
   };
 
   render() {
     return (
       <div id="calculator">
-        <div id="display">{this.state.currentNumber}</div>
+        <div id="display">{this.state.formula}{this.state.leftValue}{this.state.currentNumber}</div>
         <button onClick={this.handleValueClick} id="zero" value={0}>
           0
         </button>
