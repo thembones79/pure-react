@@ -5,12 +5,12 @@ import "./index.css";
 class Calculator extends React.Component {
   state = {
     currentNumber: "0",
-    formula: "",
-    result: "",
     leftValue: "",
     rightValue: "",
     operator: "none"
   };
+
+  //when user inputs the value, the digit is concatenated to the previous one. Zero start is an exeption. The starter zero is replaced with first digit.
   handleValueClick = event => {
     this.setState({
       operator: "none",
@@ -21,6 +21,7 @@ class Calculator extends React.Component {
     });
   };
 
+  //user is allowed to provide only one "dot" in the current number
   handleDecimalClick = event => {
     this.setState({
       operator: "none",
@@ -29,28 +30,27 @@ class Calculator extends React.Component {
         : this.state.currentNumber + event.target.value
     });
   };
-
+//turns numbers and operators into expression (as a string)
   handleOperatorClick = event => {
     this.setState({
-      /*   rightValue: this.state.operator!=="none"
-        ? this.state.currentNumber.substring(0, this.state.currentNumber.length-1) + event.target.value
-        : this.state.currentNumber + event.target.value,
-        currentNumber: "",
-        leftValue: this.state.operator!=="none"?this.state.leftValue + this.state.rightValue:this.state.leftValue,*/
-      rightValue:
-        this.state.operator === "none"
-          ? this.state.currentNumber + event.target.value
-          : this.state.rightValue.substring(0, this.state.rightValue.length-1) + event.target.value,
-      currentNumber: "",
       operator: event.target.value,
-      leftValue:
+      leftValue: //memory of the previous numbers and operators in the expression
         this.state.operator === "none"
           ? this.state.leftValue + this.state.rightValue
-          : this.state.leftValue
+          : this.state.leftValue,
+      rightValue: //last provided number (and, optionaly, operator)
+        this.state.operator === "none"
+          ? this.state.currentNumber + event.target.value
+          : this.state.rightValue.substring(
+              0,
+              this.state.rightValue.length - 1
+            ) + event.target.value, //replaces old operator with new one
+      currentNumber: ""//waits for the new number in the expression
     });
   };
-
-  handleEqualsClick = event => {
+  
+//calculates the expression
+  handleEqualsClick = () => {
     this.setState({
       currentNumber:
         this.state.operator !== "none"
@@ -58,7 +58,7 @@ class Calculator extends React.Component {
               this.state.leftValue +
                 this.state.rightValue.substring(
                   0,
-                  this.state.rightValue.length - 1
+                  this.state.rightValue.length - 1 //this handles the situation when the expression ends with an operator
                 )
             )
           : eval(
@@ -72,7 +72,7 @@ class Calculator extends React.Component {
     });
   };
 
-  handleClearClick = event => {
+  handleClearClick = () => {
     this.setState({
       currentNumber: "0",
       leftValue: "",
@@ -144,7 +144,5 @@ class Calculator extends React.Component {
     );
   }
 }
-
-
 
 ReactDOM.render(<Calculator />, document.getElementById("root"));
