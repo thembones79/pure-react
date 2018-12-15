@@ -1,8 +1,12 @@
 
+#status-icon{
+  width: 100px;
+}
 
 
-
-
+.status-icon{
+  width:100%;
+}
 
 /*
 .App {
