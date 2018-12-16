@@ -1,12 +1,14 @@
 import React from "react";
 import "./App.css";
+import moment from "moment";
 import alarm from "./BeepSound.wav";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSession: true
+      isSession: true,
+      minutes: 25
     };
     this.alarm = new Audio(alarm);
   }
@@ -14,6 +16,10 @@ class App extends React.Component {
   beep = () => {
     this.alarm.play();
   };
+
+  countdown = () => {
+    setInterval(this.setState({minutes: this.state.minutes - 1}), 1000); 
+  }
 
   render() {
     return (
@@ -35,7 +41,11 @@ const Status = ({ isSession }) => (
   </div>
 );
 
-const Timer = () => <div id="time-left">03:16</div>;
+const Timer = () => (
+  <div id="time-left">{`${moment(3, "mmss")
+    .subtract(1, "seconds")
+    .format("mm:ss")}`}</div>
+);
 
 const Controls = ({ beep }) => (
   <div id="controls">
