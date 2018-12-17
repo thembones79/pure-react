@@ -1,6 +1,7 @@
 import React from "react";
+import { renderToStaticMarkup } from 'react-dom/server';
 import "./App.css";
-import moment from "moment";
+// import moment from "moment";
 import alarm from "./BeepSound.wav";
 
 class App extends React.Component {
@@ -8,7 +9,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       isSession: true,
-      minutes: 25
+      sessionLength: 25,
+      breakLength: 1,
+      secondsLeft: 19,
+      isCountingDown: false
     };
     this.alarm = new Audio(alarm);
   }
@@ -18,16 +22,50 @@ class App extends React.Component {
   };
 
   countdown = () => {
-    setInterval(this.setState({minutes: this.state.minutes - 1}), 1000); 
-  }
+    if (!this.state.isCountingDown) {
+      this.setState({ isCountingDown: true });
+      this.timer = setInterval(this.timerDecrement, 1000);
+    } else {
+      this.setState({ isCountingDown: false });
+      clearInterval(this.timer);
+    }
+  };
+
+  timerDecrement = () => {
+    this.setState(
+      state => ({ secondsLeft: state.secondsLeft - 1 }),
+      this.sessionChange
+    );
+  };
+
+  sessionChange = () => {
+    if (this.state.secondsLeft === 0) {
+      if (this.state.isSession) {
+        this.setState(state => ({
+          isSession: false,
+          secondsLeft: state.breakLength * 60
+        }));
+      } else {
+        this.setState(state => ({
+          isSession: true,
+          secondsLeft: state.sessionLength * 60
+        }));
+      }
+    }
+  };
 
   render() {
     return (
-      <div id="pomodoro">
+      <div id="pomodoro" className={this.state.isSession ? "tomato" : "green"}>
         <header>
           <h1>Pomodoro Clock</h1>
         </header>
-        <ClockFace beep={this.beep} isSession={this.state.isSession} />
+        <ClockFace
+          beep={this.beep}
+          countdown={this.countdown}
+          isSession={this.state.isSession}
+          timeLeft={this.state.secondsLeft}
+        />
         <Settings />
       </div>
     );
@@ -36,20 +74,16 @@ class App extends React.Component {
 
 const Status = ({ isSession }) => (
   <div id="status">
-    <div id="timer-label">session</div>
+    <div id="timer-label">{isSession ? "session" : "break"}</div>
     <div id="status-icon">{isSession ? <SessionIcon /> : <BreakIcon />}</div>
   </div>
 );
 
-const Timer = () => (
-  <div id="time-left">{`${moment(3, "mmss")
-    .subtract(1, "seconds")
-    .format("mm:ss")}`}</div>
-);
+const Timer = ({ timeLeft }) => <div id="time-left">{Math.floor(timeLeft/60)+":"+timeLeft%60}</div>;
 
-const Controls = ({ beep }) => (
+const Controls = ({ countdown }) => (
   <div id="controls">
-    <div id="start_stop" onClick={beep}>
+    <div id="start_stop" onClick={countdown}>
       <i class="fas fa-play" />
     </div>
     <div id="reset">
@@ -58,13 +92,20 @@ const Controls = ({ beep }) => (
   </div>
 );
 
-const ClockFace = ({ beep, isSession }) => (
-  <div id="clock-face">
-    <Status isSession={isSession} />
-    <Timer />
-    <Controls beep={beep} />
+const ClockFace = ({ beep, countdown, isSession, timeLeft }) => {
+  const svgString = encodeURIComponent(renderToStaticMarkup(<BreakIcon />));
+  const dataUri = `url("data:image/svg+xml,${svgString}")`;
+  return(
+  <div id="outer-face" style={{background:dataUri , backgroundImage: "url(" + "./coding.svg" + ")"}}>
+    <div id="clock-face">
+      <Status isSession={isSession} />
+      <Timer timeLeft={timeLeft} />
+      <Controls beep={beep} countdown={countdown} />
+      <Circle/>
+    </div>
   </div>
-);
+  );
+};
 
 const Settings = () => (
   <div id="settings">
@@ -190,6 +231,12 @@ const SessionIcon = () => (
     <g />
     <g />
   </svg>
+);
+
+const Circle = () => (
+  <svg className ="myCircle" viewBox="0 0 32 32">
+  <circle r="16" cx="16" cy="16" style={{strokeDasharray: "88 100"}}/>
+</svg>
 );
 
 const BreakIcon = () => (
