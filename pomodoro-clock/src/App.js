@@ -1,7 +1,5 @@
 import React from "react";
-import { renderToStaticMarkup } from 'react-dom/server';
 import "./App.css";
-// import moment from "moment";
 import alarm from "./BeepSound.wav";
 
 class App extends React.Component {
@@ -12,6 +10,7 @@ class App extends React.Component {
       sessionLength: 25,
       breakLength: 1,
       secondsLeft: 19,
+      intervalTime: 19,
       isCountingDown: false
     };
     this.alarm = new Audio(alarm);
@@ -43,12 +42,14 @@ class App extends React.Component {
       if (this.state.isSession) {
         this.setState(state => ({
           isSession: false,
-          secondsLeft: state.breakLength * 60
+          secondsLeft: state.breakLength * 60,
+          intervalTime: state.breakLength * 60
         }));
       } else {
         this.setState(state => ({
           isSession: true,
-          secondsLeft: state.sessionLength * 60
+          secondsLeft: state.sessionLength * 60,
+          intervalTime: state.sessionLength * 60
         }));
       }
     }
@@ -65,6 +66,8 @@ class App extends React.Component {
           countdown={this.countdown}
           isSession={this.state.isSession}
           timeLeft={this.state.secondsLeft}
+          totalTime={this.state.intervalTime}
+          isCountingDown={this.state.isCountingDown}
         />
         <Settings />
       </div>
@@ -81,10 +84,10 @@ const Status = ({ isSession }) => (
 
 const Timer = ({ timeLeft }) => <div id="time-left">{Math.floor(timeLeft/60)+":"+timeLeft%60}</div>;
 
-const Controls = ({ countdown }) => (
+const Controls = ({ countdown, isCountingDown }) => (
   <div id="controls">
     <div id="start_stop" onClick={countdown}>
-      <i class="fas fa-play" />
+     {isCountingDown?<i class="fas fa-pause" />:<i class="fas fa-play" />} 
     </div>
     <div id="reset">
       <i class="fas fa-redo-alt" />
@@ -92,17 +95,16 @@ const Controls = ({ countdown }) => (
   </div>
 );
 
-const ClockFace = ({ beep, countdown, isSession, timeLeft }) => {
-  const svgString = encodeURIComponent(renderToStaticMarkup(<BreakIcon />));
-  const dataUri = `url("data:image/svg+xml,${svgString}")`;
+const ClockFace = ({ beep, countdown, isSession, timeLeft, totalTime, isCountingDown }) => {
+
   return(
-  <div id="outer-face" style={{background:dataUri , backgroundImage: "url(" + "./coding.svg" + ")"}}>
-    <div id="clock-face">
+  <div id="outer-face" >    
+    <div id="clock-face">    
       <Status isSession={isSession} />
-      <Timer timeLeft={timeLeft} />
-      <Controls beep={beep} countdown={countdown} />
-      <Circle/>
+      <Timer timeLeft={timeLeft} />     
+      <Circle timeLeft={timeLeft} totalTime={totalTime}/>
     </div>
+    <Controls beep={beep} countdown={countdown} isCountingDown={isCountingDown}/>
   </div>
   );
 };
@@ -116,7 +118,7 @@ const Settings = () => (
 
 const SettingItem = ({ itemName, value }) => (
   <div id={itemName}>
-    <div id={`${itemName}-label`}>session length</div>
+    <div id={`${itemName}-label`}>{itemName} length</div>
     <div className="settings" id={`${itemName}-decrement`}>
       <div id={`${itemName}-decrement`}>-</div>
       <div id={`${itemName}-length`} value={value}>
@@ -233,11 +235,14 @@ const SessionIcon = () => (
   </svg>
 );
 
-const Circle = () => (
+const Circle = ({timeLeft, totalTime}) => {
+  let normalizedTimeLeft = 101 * timeLeft / totalTime;
+  return(
   <svg className ="myCircle" viewBox="0 0 32 32">
-  <circle r="16" cx="16" cy="16" style={{strokeDasharray: "88 100"}}/>
+  <circle r="16" cx="16" cy="16" style={{strokeDasharray: `${normalizedTimeLeft} 100`, transition: "1s"}}/>
 </svg>
 );
+}
 
 const BreakIcon = () => (
   <svg className="status-icon" x="0px" y="0px" viewBox="0 0 512 512">

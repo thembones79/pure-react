@@ -1,9 +1,10 @@
 
 #status-icon{
   width: 100px;
+  z-index: 50;
 }
 .status-icon{
-  width:100%;
+  width:100%;  
 }
 
 #pomodoro{
@@ -12,6 +13,7 @@
   width: 100vw;
   height: 100vh;
   align-items: center;  
+  justify-content: space-around;
 }
 
 .tomato{
@@ -23,22 +25,36 @@
 }
 
 #clock-face{
-  /*background-color: blueviolet; */
-  padding: 20px;
+/*background-color: blueviolet; */
+  border: 1vh solid rgba(255, 255, 255, 0.222);
+  padding: 0px;
   border-radius: 50%; 
-  height: 50vh;
-  width: 50vh;
+  height: 48vh;
+  width: 48vh;
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  z-index: 2;
 }
 
 #outer-face{
-  
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
  /* background-image: url("coding.svg");*/
   padding: 20px;
+  
   /*border-radius: 50%;*/
+}
+
+.myCircle{
+  position: absolute;
+  z-index: 10;
+  
 }
 
 #timer-label{
@@ -50,21 +66,34 @@
 #controls{
   display:flex;
   width: 20%;
+  margin: 20px;
   justify-content: space-around;
 }
 
 .myCircle {
-  width: 100px; height: 100px;
+  width: 50vh; height: 50vh;
   transform: rotate(-90deg);
-  background: yellowgreen;
+  /*background: yellowgreen;*/
   border-radius: 50%;
 }
 
 circle {
-  fill: yellowgreen;
-  stroke: #655;
-  stroke-width: 32;
+  fill: rgba(255, 255, 255, 0.0);
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 1;
    /* for 38% */
+}
+
+.settings{
+  display: flex;
+  justify-content: space-around;
+}
+
+#settings{
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
 }
 
 /*
