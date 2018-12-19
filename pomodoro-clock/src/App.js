@@ -8,9 +8,9 @@ class App extends React.Component {
     this.state = {
       isSession: true,
       sessionLength: 25,
-      breakLength: 1,
-      secondsLeft: 19,
-      intervalTime: 19,
+      breakLength: 5,
+      secondsLeft: 1500,
+      intervalTime: 1500,
       isCountingDown: false
     };
     this.alarm = new Audio(alarm);
@@ -18,6 +18,18 @@ class App extends React.Component {
 
   beep = () => {
     this.alarm.play();
+  };
+
+  reset = () => {
+    clearInterval(this.timer);
+    this.setState({
+      isSession: true,
+      sessionLength: 25,
+      breakLength: 5,
+      secondsLeft: 1500,
+      intervalTime: 1500,
+      isCountingDown: false
+    });
   };
 
   countdown = () => {
@@ -39,6 +51,7 @@ class App extends React.Component {
 
   sessionChange = () => {
     if (this.state.secondsLeft === 0) {
+      this.beep();
       if (this.state.isSession) {
         this.setState(state => ({
           isSession: false,
@@ -64,12 +77,16 @@ class App extends React.Component {
         <ClockFace
           beep={this.beep}
           countdown={this.countdown}
+          reset={this.reset}
           isSession={this.state.isSession}
           timeLeft={this.state.secondsLeft}
           totalTime={this.state.intervalTime}
           isCountingDown={this.state.isCountingDown}
         />
-        <Settings />
+        <Settings
+          breakLength={this.state.breakLength}
+          sessionLength={this.state.sessionLength}
+        />
       </div>
     );
   }
@@ -82,37 +99,61 @@ const Status = ({ isSession }) => (
   </div>
 );
 
-const Timer = ({ timeLeft }) => <div id="time-left">{Math.floor(timeLeft/60)+":"+timeLeft%60}</div>;
+const Timer = ({ timeLeft }) => {
+  function addZero(number) {
+    if (number < 10) {
+      return "0" + number;
+    } else {
+      return number;
+    }
+  }
 
-const Controls = ({ countdown, isCountingDown }) => (
+  let minutes = addZero(Math.floor(timeLeft / 60));
+  let seconds = addZero(timeLeft % 60);
+
+  return <div id="time-left">{minutes + ":" + seconds}</div>;
+};
+const Controls = ({ countdown, isCountingDown, reset }) => (
   <div id="controls">
     <div id="start_stop" onClick={countdown}>
-     {isCountingDown?<i class="fas fa-pause" />:<i class="fas fa-play" />} 
+      {isCountingDown ? <i class="fas fa-pause" /> : <i class="fas fa-play" />}
     </div>
-    <div id="reset">
+    <div id="reset" onClick={reset}>
       <i class="fas fa-redo-alt" />
     </div>
   </div>
 );
 
-const ClockFace = ({ beep, countdown, isSession, timeLeft, totalTime, isCountingDown }) => {
-
-  return(
-  <div id="outer-face" >    
-    <div id="clock-face">    
-      <Status isSession={isSession} />
-      <Timer timeLeft={timeLeft} />     
-      <Circle timeLeft={timeLeft} totalTime={totalTime}/>
+const ClockFace = ({
+  beep,
+  countdown,
+  isSession,
+  timeLeft,
+  totalTime,
+  isCountingDown,
+  reset
+}) => {
+  return (
+    <div id="outer-face">
+      <div id="clock-face">
+        <Status isSession={isSession} />
+        <Timer timeLeft={timeLeft} />
+        <Circle timeLeft={timeLeft} totalTime={totalTime} />
+      </div>
+      <Controls
+        beep={beep}
+        countdown={countdown}
+        isCountingDown={isCountingDown}
+        reset={reset}
+      />
     </div>
-    <Controls beep={beep} countdown={countdown} isCountingDown={isCountingDown}/>
-  </div>
   );
 };
 
-const Settings = () => (
+const Settings = ({ breakLength, sessionLength }) => (
   <div id="settings">
-    <SettingItem itemName="session" value={25} />
-    <SettingItem itemName="break" value={5} />
+    <SettingItem itemName="session" value={sessionLength} />
+    <SettingItem itemName="break" value={breakLength} />
   </div>
 );
 
@@ -235,14 +276,22 @@ const SessionIcon = () => (
   </svg>
 );
 
-const Circle = ({timeLeft, totalTime}) => {
-  let normalizedTimeLeft = 101 * timeLeft / totalTime;
-  return(
-  <svg className ="myCircle" viewBox="0 0 32 32">
-  <circle r="16" cx="16" cy="16" style={{strokeDasharray: `${normalizedTimeLeft} 100`, transition: "1s"}}/>
-</svg>
-);
-}
+const Circle = ({ timeLeft, totalTime }) => {
+  let normalizedTimeLeft = (101 * timeLeft) / totalTime;
+  return (
+    <svg className="myCircle" viewBox="0 0 32 32">
+      <circle
+        r="16"
+        cx="16"
+        cy="16"
+        style={{
+          strokeDasharray: `${normalizedTimeLeft} 100`,
+          transition: "1s"
+        }}
+      />
+    </svg>
+  );
+};
 
 const BreakIcon = () => (
   <svg className="status-icon" x="0px" y="0px" viewBox="0 0 512 512">
