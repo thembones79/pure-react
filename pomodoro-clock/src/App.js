@@ -49,6 +49,48 @@ class App extends React.Component {
     );
   };
 
+  decreaseDisplayedTime = () => {
+    this.setState({
+      secondsLeft: this.state.secondsLeft - 60,
+      intervalTime: this.state.intervalTime - 60
+    });
+  };
+
+  increaseDisplayedTime = () => {
+    this.setState({
+      secondsLeft: this.state.secondsLeft + 60,
+      intervalTime: this.state.intervalTime + 60
+    });
+  };
+
+  sessionDecrement = () => {
+    this.setState({ sessionLength: this.state.sessionLength - 1 });
+    if (this.state.isSession) {
+      this.decreaseDisplayedTime();
+    }
+  };
+
+  sessionIncrement = () => {
+    this.setState({ sessionLength: this.state.sessionLength + 1 });
+    if (this.state.isSession) {
+      this.increaseDisplayedTime();
+    }
+  };
+
+  breakDecrement = () => {
+    this.setState({ breakLength: this.state.breakLength - 1 });
+    if (!this.state.isSession) {
+      this.decreaseDisplayedTime();
+    }
+  };
+
+  breakIncrement = () => {
+    this.setState({ breakLength: this.state.breakLength + 1 });
+    if (!this.state.isSession) {
+      this.increaseDisplayedTime();
+    }
+  };
+
   sessionChange = () => {
     if (this.state.secondsLeft === 0) {
       this.beep();
@@ -86,15 +128,20 @@ class App extends React.Component {
         <Settings
           breakLength={this.state.breakLength}
           sessionLength={this.state.sessionLength}
+          handleSessionIncrementClick={this.sessionIncrement}
+          handleSessionDecrementClick={this.sessionDecrement}
+          handleBreakIncrementClick={this.breakIncrement}
+          handleBreakDecrementClick={this.breakDecrement}
         />
       </div>
     );
   }
 }
 
-const Status = ({ isSession }) => (
+const Status = ({ isSession, timeLeft }) => (
   <div id="status">
     <div id="timer-label">{isSession ? "session" : "break"}</div>
+    <Timer timeLeft={timeLeft} />
     <div id="status-icon">{isSession ? <SessionIcon /> : <BreakIcon />}</div>
   </div>
 );
@@ -116,10 +163,14 @@ const Timer = ({ timeLeft }) => {
 const Controls = ({ countdown, isCountingDown, reset }) => (
   <div id="controls">
     <div id="start_stop" onClick={countdown}>
-      {isCountingDown ? <i class="fas fa-pause" /> : <i class="fas fa-play" />}
+      {isCountingDown ? (
+        <i className="fas fa-pause" />
+      ) : (
+        <i className="fas fa-play" />
+      )}
     </div>
     <div id="reset" onClick={reset}>
-      <i class="fas fa-redo-alt" />
+      <i className="fas fa-redo-alt" />
     </div>
   </div>
 );
@@ -136,8 +187,7 @@ const ClockFace = ({
   return (
     <div id="outer-face">
       <div id="clock-face">
-        <Status isSession={isSession} />
-        <Timer timeLeft={timeLeft} />
+        <Status isSession={isSession} timeLeft={timeLeft} />
         <Circle timeLeft={timeLeft} totalTime={totalTime} />
       </div>
       <Controls
@@ -150,22 +200,58 @@ const ClockFace = ({
   );
 };
 
-const Settings = ({ breakLength, sessionLength }) => (
+const Settings = ({
+  breakLength,
+  sessionLength,
+  handleBreakDecrementClick,
+  handleBreakIncrementClick,
+  handleSessionDecrementClick,
+  handleSessionIncrementClick
+}) => (
   <div id="settings">
-    <SettingItem itemName="session" value={sessionLength} />
-    <SettingItem itemName="break" value={breakLength} />
+    <SettingItem
+      itemName="session"
+      value={sessionLength}
+      handleDecrementClick={handleSessionDecrementClick}
+      handleIncrementClick={handleSessionIncrementClick}
+    />
+    <SettingItem
+      itemName="break"
+      value={breakLength}
+      handleDecrementClick={handleBreakDecrementClick}
+      handleIncrementClick={handleBreakIncrementClick}
+    />
   </div>
 );
 
-const SettingItem = ({ itemName, value }) => (
-  <div id={itemName}>
-    <div id={`${itemName}-label`}>{itemName} length</div>
+const SettingItem = ({
+  itemName,
+  value,
+  handleDecrementClick,
+  handleIncrementClick
+}) => (
+  <div id={itemName} className="settings-block">
+    <div id={`${itemName}-label`} className="settings-label">
+      {itemName} length
+    </div>
     <div className="settings" id={`${itemName}-decrement`}>
-      <div id={`${itemName}-decrement`}>-</div>
-      <div id={`${itemName}-length`} value={value}>
+      <div
+        id={`${itemName}-decrement`}
+        className="settings-button"
+        onClick={handleDecrementClick}
+      >
+        -
+      </div>
+      <div id={`${itemName}-length`} className="settings-value" value={value}>
         {value}
       </div>
-      <div id={`${itemName}-increment`}>+</div>
+      <div
+        id={`${itemName}-increment`}
+        className="settings-button"
+        onClick={handleIncrementClick}
+      >
+        +
+      </div>
     </div>
   </div>
 );
