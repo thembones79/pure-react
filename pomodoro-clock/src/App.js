@@ -64,10 +64,11 @@ class App extends React.Component {
   };
 
   sessionDecrement = () => {
+    if (this.state.sessionLength>1){
     this.setState({ sessionLength: this.state.sessionLength - 1 });
     if (this.state.isSession) {
       this.decreaseDisplayedTime();
-    }
+    }}
   };
 
   sessionIncrement = () => {
@@ -78,21 +79,23 @@ class App extends React.Component {
   };
 
   breakDecrement = () => {
+    if(this.state.breakLength>1){
     this.setState({ breakLength: this.state.breakLength - 1 });
     if (!this.state.isSession) {
       this.decreaseDisplayedTime();
-    }
+    }}
   };
 
   breakIncrement = () => {
+    if(this.state.breakLength<60){
     this.setState({ breakLength: this.state.breakLength + 1 });
     if (!this.state.isSession) {
       this.increaseDisplayedTime();
-    }
+    }}
   };
 
   sessionChange = () => {
-    if (this.state.secondsLeft === 0) {
+    if (this.state.secondsLeft === -1) {
       this.beep();
       if (this.state.isSession) {
         this.setState(state => ({
