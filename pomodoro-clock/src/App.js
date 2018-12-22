@@ -21,6 +21,7 @@ class App extends React.Component {
   };
 
   reset = () => {
+    //this.alarm.stop();
     clearInterval(this.timer);
     this.setState({
       isSession: true,
@@ -72,10 +73,11 @@ class App extends React.Component {
   };
 
   sessionIncrement = () => {
+    if(this.state.sessionLength<60){
     this.setState({ sessionLength: this.state.sessionLength + 1 });
     if (this.state.isSession) {
       this.increaseDisplayedTime();
-    }
+    }}
   };
 
   breakDecrement = () => {
@@ -192,6 +194,7 @@ const ClockFace = ({
       <div id="clock-face">
         <Status isSession={isSession} timeLeft={timeLeft} />
         <Circle timeLeft={timeLeft} totalTime={totalTime} />
+        
       </div>
       <Controls
         beep={beep}
