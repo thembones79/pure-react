@@ -1,6 +1,7 @@
 import React from "react";
 import "./Pomodoro.css";
 import alarm from "./BeepSound.wav";
+import {connect} from 'react-redux';
 
 class Pomodoro extends React.Component {
   constructor(props) {
@@ -85,6 +86,12 @@ class Pomodoro extends React.Component {
     }}
     */
   };
+
+  
+
+  reduxDecrement2 = () => {
+      this.props.dispatch({type: 'DECREMENT'});
+  }
 
   sessionIncrement = () => {
       /*
@@ -233,6 +240,7 @@ const Settings = ({
   sessionLength,
   handleBreakDecrementClick,
   handleBreakIncrementClick,
+  reduxDecrement2,
   handleSessionDecrementClick,
   handleSessionIncrementClick
 }) => (
@@ -240,8 +248,8 @@ const Settings = ({
     <SettingItem
       itemName="session"
       value={sessionLength}
-      handleDecrementClick={handleSessionDecrementClick}
-      handleIncrementClick={handleSessionIncrementClick}
+      handleDecrementClick={reduxDecrement}
+      handleIncrementClick={reduxIncrement}
     />
     <SettingItem
       itemName="break"
@@ -464,4 +472,29 @@ const BreakIcon = () => (
   </svg>
 );
 
-export default Pomodoro;
+function mapStateToProps(state){
+    return {    
+      isSession: state.isSession,
+      sessionLength: state.sessionLength,
+      breakLength: state.breakLength,
+      secondsLeft: state.secondsLeft,
+      intervalTime: state.intervalTime,
+      isCountingDown: state.isCountingDown    
+    };
+}
+
+
+const reduxDecrement = () => {
+    return {
+        type: "DECREMENT"
+    };
+}
+
+const reduxIncrement = () => {
+    return {
+        type: "INCREMENT"
+    };
+}
+
+
+export default connect(mapStateToProps)(Pomodoro);
