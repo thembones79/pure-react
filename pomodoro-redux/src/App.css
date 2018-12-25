@@ -1,3 +1,165 @@
+#status-icon {
+  width: 9vh;
+  z-index: 50;
+  margin-top: 2vh;
+}
+
+
+#pomodoro {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+}
+
+.tomato {
+  background-color: tomato;
+  transition: 1s;
+}
+
+.green {
+  background-color: #00de88;
+  transition: 1s;
+}
+
+#clock-face {
+  /*background-color: blueviolet; */
+  border: 1vh solid rgba(255, 255, 255, 0.222);
+  padding: 0px;
+  border-radius: 50%;
+  height: 48vh;
+  width: 48vh;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 2;
+}
+
+#outer-face {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* background-image: url("coding.svg");*/
+  padding: 20px;
+
+  /*border-radius: 50%;*/
+}
+
+.myCircle {
+  position: absolute;
+  z-index: 10;
+
+}
+
+#timer-label {
+  text-align: center;
+  margin-top: 2vh;
+  font-size: 4.3vh;
+}
+
+#time-left {
+  font-size: 14vh;
+  margin-top: 2vh;
+  font-weight: 100;
+}
+
+#controls {
+  display: flex;
+  width: 25vh;
+  margin: 1vh;
+  justify-content: space-around;
+  font-size: 2em;
+}
+
+
+#status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 39vh;
+  align-items: center;
+}
+
+.myCircle {
+  width: 50vh;
+  height: 50vh;
+  transform: rotate(-90deg);
+  /*background: yellowgreen;*/
+  border-radius: 50%;
+}
+
+circle {
+  fill: rgba(255, 255, 255, 0.0);
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 1;
+  /* for 38% */
+}
+
+.settings {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#settings {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 2vh;
+}
+
+.settings-button {
+  cursor: pointer;
+  border: 1px solid white;
+  height: 5vh;
+  width: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 10px;
+  outline: none;
+  font-size: 5vh;
+  padding-bottom: 1vh;
+  padding-left: .5vh;
+  padding-right: .5vh;
+  user-select: none;
+}
+
+.settings-button:hover {
+  background-color: white;
+  color: black;
+  transition: .3s;
+}
+
+.settings-label {
+  margin: 1px;
+  text-align: center;
+  font-size: 2.7vh;
+}
+
+.settings-value {
+  font-size: 5vh;
+  font-weight: 100;
+  margin: 10px;
+}
+
+h1 {
+  font-size: 5vh;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+
+}
+
+/*
 .App {
   text-align: center;
 }
@@ -30,3 +192,4 @@
     transform: rotate(360deg);
   }
 }
+*/
