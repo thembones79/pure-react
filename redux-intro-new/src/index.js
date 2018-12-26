@@ -19,10 +19,17 @@ function reducer(state = initialState, action) {
         return{
             count: state.count - 1
         };
+        case 'START':
+        this.timer = setInterval(this.timerDecrement, 1000);
+        return{
+            count: state.count + 1
+        };
         default:
         return state;
     }
 }
+
+
 
 const store = createStore(reducer);
 
