@@ -41,10 +41,11 @@ const breakReducer = (state = initialState.secondsLeft, action) => {
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  break: breakReducer
+  break: breakReducer,
+  rest: reducer
 });
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 
 const App = () => (
   <Provider store={store}>
