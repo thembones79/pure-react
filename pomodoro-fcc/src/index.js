@@ -250,7 +250,7 @@ class App extends React.Component {
       <div id={`${itemName}-label`} className="settings-label">
         {itemName} length
       </div>
-      <div className="settings" id={`${itemName}-decrement`}>
+      <div className="settings" >
         <div
           id={`${itemName}-decrement`}
           className="settings-button"
