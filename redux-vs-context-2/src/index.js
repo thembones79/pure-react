@@ -46,3 +46,34 @@ const Body = ({sidebar, content}) => (
     {content}
     </div>
 );
+
+class App extends React.Component {
+    state = {
+        user: {
+            avatar: "https://api.adorable.io/avatars/160/boss@gmail.com",
+            name: "Mike",
+            followers: 1234,
+            following: 123
+        }
+    };
+
+    render() {
+
+        const {user} = this.state;
+
+        return (
+            <div className="app">
+                <Nav>
+                    <UserAvatar user={user} size="small"/>
+                </Nav>
+                <Body
+                sidebar={<UserStats user={user}/>}
+                content={<Content/>}
+                />
+            </div>
+        );
+
+    }
+}
+
+ReactDOM.render(<App/>, document.querySelector("#root"));
