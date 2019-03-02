@@ -26,4 +26,47 @@ const UserStats = ({user}) => (
     </div>
 );
 
-ReactDOM.render(<UserAvatar/>, document.querySelector('#root'));
+const Nav = ({user}) => (
+    <div className="nav">
+        <UserAvatar user={user} size="small"/>
+    </div>
+);
+
+const Content = () => <div className="content">main content here</div>;
+
+const Sidebar = ({user}) => (
+    <div className="sidebar">
+        <UserStats user={user} />
+    </div>
+);
+
+const Body = ({user}) => (
+    <div className="body">
+        <Sidebar user={user}/>
+        <Content user={user}/>
+    </div>
+);
+
+class App extends React.Component {
+    state = {
+        user: {
+            avatar: "https://api.adorable.io/avatars/160/boss@gmail.com",
+            name:"Mike",
+            followers: 1234,
+            following: 123
+        }
+    };
+
+    render() {
+        const {user} = this.state;
+
+        return(
+            <div className="app">
+                <Nav user={user}/>
+                <Body user={user}/>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App/>, document.querySelector('#root'));
