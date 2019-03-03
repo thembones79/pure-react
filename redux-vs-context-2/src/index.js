@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import "./index.css";
 
 
-const UserAvatar = (user, size) => (
+const UserAvatar = ({user, size}) => (
     <img
     className={`user-avatar ${size || ""}`}
     alt="user avatar"
@@ -41,7 +41,7 @@ const Sidebar = ({children}) => (
 );
 
 const Body = ({sidebar, content}) => (
-    <div>
+    <div className="body">
     <Sidebar>{sidebar}</Sidebar>
     {content}
     </div>
@@ -53,7 +53,7 @@ class App extends React.Component {
             avatar: "https://api.adorable.io/avatars/160/boss@gmail.com",
             name: "Mike",
             followers: 1234,
-            following: 123
+            following: 125
         }
     };
 
